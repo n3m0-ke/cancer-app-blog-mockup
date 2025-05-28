@@ -48,16 +48,20 @@ cancer-app-blog-mockup/
 ```bash
 git clone https://github.com/<your-username>/cancer-app-blog-mockup.git
 cd cancer-app-blog-mockup
+```
 
 ### 2. Set up the backend
 
+```bash
 cd backend
 npm install
 # create a .env file and add your Supabase Postgres URI
 npm run dev
+```
 
-### 2. Set up the frontend
+### 3. Set up the frontend
 
+```bash
 cd ../frontend
 npm install
 npm start
@@ -92,8 +96,11 @@ JWT_SECRET=your_super_secret_key
 🤝 Contribution
 This is a solo personal project. Contributions welcome later once the core prototype stabilizes.
 
+
+
 🧠 Future Vision
 This project is part of a larger app ecosystem aimed at improving cancer care in Kenya. The blog serves as an educational, inspirational, and engagement channel for patients, doctors, and caregivers.
+
 
 📄 License
 MIT License
