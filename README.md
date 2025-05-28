@@ -26,6 +26,7 @@ A full-stack blog application built as a prototype for a larger cancer support a
 
 ## 📁 Folder Structure
 
+```bash
 cancer-app-blog-mockup/
 ├── backend/ # Express backend
 │ ├── controllers/
@@ -38,7 +39,7 @@ cancer-app-blog-mockup/
 ├── .env
 ├── .gitignore
 └── README.md
-
+```
 ---
 
 ## 🚀 Getting Started
