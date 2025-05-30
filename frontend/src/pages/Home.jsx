@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getPosts } from '../api';
 import PostCard from '../components/Postcard';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -12,7 +13,9 @@ const Home = () => {
   }, []);
 
   return (
+    
     <div className="p-6">
+        <Link to="/login" className="text-blue-600">Login</Link>
       <h1 className="text-2xl font-bold mb-4">Latest Posts</h1>
       <div className="grid gap-4">
         {posts.map(post => (
