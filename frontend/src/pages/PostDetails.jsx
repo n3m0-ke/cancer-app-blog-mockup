@@ -9,11 +9,11 @@ const PostDetails = () => {
   const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/posts/${slug}`)
+    axios.get(`https://cancer-app-blog-mockup-backend.onrender.com/api/posts/${slug}`)
       .then(res => setPost(res.data))
       .catch(err => console.error(err));
 
-    axios.get(`http://localhost:3000/api/comments/post/${slug}`)
+    axios.get(`https://cancer-app-blog-mockup-backend.onrender.com/api/comments/post/${slug}`)
       .then(res => setComments(res.data))
       .catch(err => console.error(err));
   }, [slug]);
@@ -23,14 +23,14 @@ const PostDetails = () => {
     if (!newComment.trim()) return;
 
     try {
-      await axios.post(`http://localhost:3000/api/comments/`, {
+      await axios.post(`https://cancer-app-blog-mockup-backend.onrender.com/api/comments/`, {
         slug,
         content: newComment,
         user_id: null // placeholder; later this could be logged-in user
       });
       setNewComment('');
       // Refresh comments
-      const res = await axios.get(`http://localhost:3000/api/comments/post/${slug}`);
+      const res = await axios.get(`https://cancer-app-blog-mockup-backend.onrender.com/api/comments/post/${slug}`);
       setComments(res.data);
     } catch (err) {
       console.error('Failed to post comment:', err);
