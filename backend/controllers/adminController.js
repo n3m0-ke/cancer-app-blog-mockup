@@ -23,4 +23,48 @@ const getDashboardStats = async (req, res) => {
   }
 };
 
-module.exports = { getDashboardStats };
+// List all users
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await pool.query('SELECT id, name, email, role, is_active FROM users');
+    res.json(users.rows);
+  } catch (err) {
+    console.error('Get users error:', err);
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+};
+
+// Change user role (admin/author/user)
+const updateUserRole = async (req, res) => {
+  const { id } = req.params;
+  const { role } = req.body;
+
+  try {
+    await pool.query('UPDATE users SET role = $1 WHERE id = $2', [role, id]);
+    res.json({ message: 'User role updated' });
+  } catch (err) {
+    console.error('Update role error:', err);
+    res.status(500).json({ error: 'Failed to update role' });
+  }
+};
+
+// Activate/deactivate user
+const updateUserStatus = async (req, res) => {
+  const { id } = req.params;
+  const { is_active } = req.body;
+
+  try {
+    await pool.query('UPDATE users SET is_active = $1 WHERE id = $2', [is_active, id]);
+    res.json({ message: 'User status updated' });
+  } catch (err) {
+    console.error('Update status error:', err);
+    res.status(500).json({ error: 'Failed to update status' });
+  }
+};
+
+module.exports = {
+  getDashboardStats,
+  getAllUsers,
+  updateUserRole,
+  updateUserStatus,
+};
