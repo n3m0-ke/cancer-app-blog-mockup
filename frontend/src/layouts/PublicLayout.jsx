@@ -1,14 +1,16 @@
 // src/components/PublicLayout.jsx
-import Navbar from './Navbar';
+import Navbar from '../components/IndexNavbar';
+import Footer from '../components/IndexFooter';
 import { Outlet } from 'react-router-dom';
 
 const PublicLayout = ({ children }) => {
     return (
         <div className="min-h-screen bg-gray-50 text-gray-900">
             <Navbar />
-            <main className="max-w-4xl mx-auto p-4">
+            <main className="w-full mx-auto">
                 <Outlet />
             </main>
+            <Footer />
         </div>
     );
 };

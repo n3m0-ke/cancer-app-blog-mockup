@@ -3,6 +3,8 @@ import { getPosts } from '../api';
 import PostCard from '../components/Postcard';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
+import Hero from '../components/IndexHero';
+import BlogMainSection from '../components/IndexMainSection';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -23,9 +25,10 @@ const Home = () => {
   if (error) return <ErrorMessage message={error} />;
 
   return (
+    <>
+    <Hero />
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Latest Posts</h1>
-      {posts.length === 0 ? (
+      {/* {posts.length === 0 ? (
         <p className="text-gray-600">No posts yet.</p>
       ) : (
         <div className="grid gap-4">
@@ -33,8 +36,11 @@ const Home = () => {
             <PostCard key={post.id} post={post} />
           ))}
         </div>
-      )}
+      )} */}
+
+      <BlogMainSection />
     </div>
+    </>
   );
 };
 
