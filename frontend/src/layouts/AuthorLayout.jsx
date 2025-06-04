@@ -1,23 +1,19 @@
-// src/layouts/AuthorLayout.jsx
-import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import React from "react";
+import { Outlet } from "react-router-dom";
 
-const AuthorLayout = () => {
+import Navbar from "../components/authorComponents/AuthorNavbar";
+import Sidebar from "../components/authorComponents/SideBar";
+
+export default function AuthorLayout() {
   return (
-    <div className="min-h-screen flex bg-gray-100">
-      <aside className="w-64 bg-white shadow p-4">
-        <h2 className="text-xl font-bold mb-4">Author Panel</h2>
-        <nav className="space-y-2">
-          <NavLink to="/author" className="block hover:underline">Dashboard</NavLink>
-          <NavLink to="/author/posts" className="block hover:underline">My Posts</NavLink>
-          {/* Add more author links as needed */}
-        </nav>
-      </aside>
-      <main className="flex-1 p-6">
-        <Outlet />
-      </main>
-    </div>
+    <>
+      <Sidebar />
+      <div className="relative md:ml-64 bg-blueGray-100 min-h-screen">
+        <Navbar />
+        <div className="pt-20 px-4">
+          <Outlet /> {/* This is where child route components will render */}
+        </div>
+      </div>
+    </>
   );
-};
-
-export default AuthorLayout;
+}

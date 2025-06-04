@@ -7,6 +7,9 @@ import PublicLayout from './layouts/PublicLayout';
 
 import AuthorLayout from './layouts/AuthorLayout';
 import AuthorDashboard from './pages/author/AuthorDashboard';
+import MyPosts from './pages/author/MyPosts';
+import NewPost from './pages/author/NewPost';
+import AuthorProfile from './pages/author/Profile';
 
 import AdminLayout from './layouts/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -48,9 +51,15 @@ function App() {
         {/* Author Routes (protected) */}
         <Route element={<ProtectedRoute allowedRoles={['author']} />}>
           <Route path="/author" element={<AuthorLayout />}>
-            <Route index element={<AuthorDashboard />} />
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<AuthorDashboard />} />
+            <Route path="my-posts" element={<MyPosts />} />
+            <Route path="new-post" element={<NewPost />} />
+            <Route path="profile" element={<AuthorProfile />} />
           </Route>
         </Route>
+
+
       </Routes>
     </Router>
   );
