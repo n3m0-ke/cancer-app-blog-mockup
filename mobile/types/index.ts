@@ -4,7 +4,7 @@ export interface Post {
   content: string;
   slug: string;
   status: 'draft' | 'published';
-  published_at: string | null;
+  published_at: Date ;
   seo_title?: string;
   seo_description?: string;
   created_at: string;
