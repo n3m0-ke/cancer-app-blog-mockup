@@ -1,41 +1,80 @@
-// app/login.tsx
-import { View, Text, TextInput, Button, Alert } from 'react-native';
 import { useState } from 'react';
-import { router } from 'expo-router';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { useRouter } from 'expo-router';
+import axios from 'axios';
+import { saveAuth } from '@/utils/auth';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      return Alert.alert('Error', 'Please enter email and password.');
+    }
+
+    setLoading(true);
     try {
-      const res = await fetch('https://cancer-app-blog-mockup-backend.onrender.com/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+      const res = await axios.post('https://cancer-app-blog-mockup-backend.onrender.com/api/auth/login', {
+        email,
+        password,
       });
 
-      const data = await res.json();
+      const { token, user } = res.data;
+      await saveAuth(token, user);
 
-      if (!res.ok) {
-        Alert.alert('Login Failed', data.error || 'Check credentials');
-        return;
+      // Role-based redirect
+      switch (user.role) {
+        case 'admin':
+          router.replace('/dashboard/admin');
+          break;
+        case 'author':
+          router.replace('/dashboard/author');
+          break;
+        default:
+          router.replace('/');
       }
-
-      // store token for later use (secure storage suggested in production)
-      router.push('/');
     } catch (err) {
-      Alert.alert('Error', 'Something went wrong');
+      console.log(err);
+      Alert.alert('Login Failed', 'Invalid credentials');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text>Email</Text>
-      <TextInput onChangeText={setEmail} value={email} autoCapitalize="none" style={{ borderWidth: 1, marginBottom: 10 }} />
-      <Text>Password</Text>
-      <TextInput onChangeText={setPassword} value={password} secureTextEntry style={{ borderWidth: 1, marginBottom: 10 }} />
-      <Button title="Login" onPress={handleLogin} />
+    <View className="flex-1 justify-center px-6 bg-white">
+      <Text className="text-2xl font-bold mb-6 text-center">Login</Text>
+
+      <TextInput
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        className="border rounded px-4 py-2 mb-4"
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+      <TextInput
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        className="border rounded px-4 py-2 mb-6"
+      />
+
+      <TouchableOpacity
+        onPress={handleLogin}
+        disabled={loading}
+        className={`bg-blue-600 py-3 rounded ${loading ? 'opacity-50' : ''}`}
+      >
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text className="text-white text-center font-semibold">Login</Text>
+        )}
+      </TouchableOpacity>
     </View>
   );
 }
